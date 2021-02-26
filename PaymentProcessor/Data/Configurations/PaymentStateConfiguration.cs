@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace PaymentProcessor.Data.Configurations
 {
-    public class PaymentStateConfiguration : BaseConfiguration<PaymentState>
+    public class PaymentStateConfiguration : IEntityTypeConfiguration<PaymentState>
     {
-        public override void Configure(EntityTypeBuilder<PaymentState> modelBuilder)
+        public void Configure(EntityTypeBuilder<PaymentState> modelBuilder)
         {
-
             modelBuilder.Property(x => x.State)
                 .HasMaxLength(9)
                 .IsUnicode(false)

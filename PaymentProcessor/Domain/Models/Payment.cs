@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PaymentProcessor.Domain.Models
 {
-    public class Payment :BaseModel
+    public class Payment
     {
         public long Id { get; set; }
         public string CreditCardNumber { get; set; }

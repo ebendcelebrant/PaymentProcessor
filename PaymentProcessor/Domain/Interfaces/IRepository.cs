@@ -32,6 +32,7 @@ namespace PaymentProcessor.Domain.Interfaces
 
         bool Exists(TKey id);
         IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "");
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = ""); 
+        int Complete();
     }
 }

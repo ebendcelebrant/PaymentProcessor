@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace PaymentProcessor.Data.Configurations
 {
-    public class PaymentConfiguration : BaseConfiguration<Payment>
+    public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
     {
-        public override void Configure(EntityTypeBuilder<Payment> modelBuilder)
+        public void Configure(EntityTypeBuilder<Payment> modelBuilder)
         {
-
             modelBuilder.Property(x => x.SecurityCode)
                 .HasMaxLength(3)
                 .IsUnicode(false)
@@ -34,13 +33,11 @@ namespace PaymentProcessor.Data.Configurations
                 .HasPrecision(19,4)
                 .IsRequired();
 
+            modelBuilder.ToTable("Payments");
             modelBuilder.HasOne(x => x.PaymentState)
                 .WithOne(x => x.Payment)
-                .HasForeignKey<PaymentState>(x => x.PaymentId);
+                .HasForeignKey<PaymentState>(x => x.Id);
 
-            modelBuilder.ToTable("Payments");
-
-            base.Configure(modelBuilder);
 
         }
     }

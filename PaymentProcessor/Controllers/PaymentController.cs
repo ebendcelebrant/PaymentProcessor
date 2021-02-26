@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using PaymentProcessor.Domain.Interfaces;
+using PaymentProcessor.Domain.Models;
 
 namespace PaymentProcessor.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaymentController : ControllerBase
+    public class PaymentController : BaseController
     {
         public IUnitOfWork _unitOfWork;
         public ILogger _logger;
@@ -21,18 +24,18 @@ namespace PaymentProcessor.Controllers
             _logger = logger;
         }
 
-        [Route("FromJson/Display")]
+        [Route("ProcessPayment")]
         [HttpPost]
-        public IActionResult DisplayFormattedOpeningHours(OpeningHours openingHours)
+        public IActionResult ProcessPayment(Payment payment)
         {
             try
             {
-                _logger.LogInformation($"API Request. Params: {JsonConvert.SerializeObject(openingHours)}");
-                var response = _service.FormatOpeningHours(openingHours);
-
+                _logger.LogInformation($"API Request. Params: {JsonConvert.SerializeObject(payment)}");
+                var response = _unitOfWork.Payments.ProcessPayment(payment);
 
                 _logger.LogInformation($"API Response: {response}");
-                return Ok(response);
+
+                return BuildHttpResponse(response);
             }
             catch (Exception ex)
             {

@@ -8,6 +8,7 @@ using PaymentProcessor.Data;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using PaymentProcessor.Domain.Services;
+using PaymentProcessor.Domain.Models;
 
 namespace PaymentProcessor.Services
 {
@@ -15,12 +16,17 @@ namespace PaymentProcessor.Services
     {
         private readonly PaymentProcessorContext _context;
         private readonly ILogger<UnitOfWork> _logger;
+
         private bool _disposed;
 
-        public UnitOfWork(PaymentProcessorContext context, ILogger<UnitOfWork> logger)
+        public UnitOfWork(PaymentProcessorContext context, ILogger<UnitOfWork> logger,
+            ILogger<Repository<Payment, long>> paymentLogger, ILogger<Repository<PaymentState, long>> paymentStateLogger)
         {
             _context = context;
             _logger = logger;
+
+            Payments = new PaymentService(_context, paymentLogger);
+            PaymentStates = new PaymentStateService(_context, paymentStateLogger);
         }
 
 

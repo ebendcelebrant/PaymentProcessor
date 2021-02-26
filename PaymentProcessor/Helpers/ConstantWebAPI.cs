@@ -11,5 +11,8 @@ namespace PaymentProcessor.Helpers
 
         public const int IntClientTimeSpan = 100;
         public const int IntServerTimeSpan = 100;
+
+        public const int CheapGatewayRetries = 1;
+        public const int PremiumPaymentRetries = 3;
     }
 }

@@ -11,6 +11,7 @@ namespace PaymentProcessor.Data
 {
     public class PaymentProcessorContext : DbContext
     {
+        public PaymentProcessorContext() { }
         public PaymentProcessorContext(DbContextOptions<PaymentProcessorContext> options)
               : base(options)
         {
